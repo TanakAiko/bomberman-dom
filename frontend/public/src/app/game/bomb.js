@@ -114,7 +114,7 @@ class Bomb {
         playSound("sound_bomb.mp3");
         updateMap(coordonates_impact, thePlayer);
 
-        setTimeout(() => cleanExplosion(toClean, toClean_coords), 1000);
+        setTimeout(() => cleanExplosion(toClean, toClean_coords), 2000);
     }
 
     isValidCoord({ x, y }) {
