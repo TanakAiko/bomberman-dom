@@ -81,7 +81,7 @@ export function playerBoom(payload) {
         }
     });
 
-    console.log("POSX: ", player.posX, "POSY: ", player.posY);
     const target = document.getElementById(`${player.posX}${player.posY}`);
     bomb.poseBomb(target, player);
 }
+

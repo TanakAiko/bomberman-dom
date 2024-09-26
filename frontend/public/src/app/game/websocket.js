@@ -2,6 +2,7 @@ import store from "../store/store-app.js";
 import router from "../../../index.js";
 import { UserJoined, constructMap, playerMove, playerBoom } from "./todo.js";
 import handleMove from "./move.js";
+import { checkIfLost, DeletePlayer, handleGameEnd } from "../../utils/utils.js";
 
 
 class GameWebSocket {
@@ -57,7 +58,6 @@ class GameWebSocket {
 
                 // when we receive an action
                 case "action":
-                    console.log("ACTIONNNNN: ", payload);
                     (payload.content).includes("Arrow") && playerMove(payload);
                     payload.content === " " && playerBoom(payload);
                     break;
@@ -67,10 +67,6 @@ class GameWebSocket {
                     store.dispatch({ type: "ADD_MSG", payload: payload })
                     break;
 
-                case "looseLife":
-                    store.dispatch({ type: "LOOSE_LIFE", payload: payload })
-                    break
-
                 case "upScoreWall":
                     store.dispatch({ type: "UP_SCORE_WALL", payload: payload })
                     break
@@ -78,9 +74,25 @@ class GameWebSocket {
                 case "upScoreEnnemy":
                     store.dispatch({ type: "UP_SCORE_ENNEMY", payload: payload })
                     break
+                    
+                case "looseLife":                    
+                    store.dispatch({type: "LOOSE_LIFE", payload: payload})
+                    checkIfLost(payload.nickname);
+                    break
+
+                case "playerLost":
+                    DeletePlayer(payload.nickname);
+                    break;
 
                 // when one player leaves the game
                 case "leave":
+                    DeletePlayer(payload.nickname);
+                    break;
+
+                // when the game is over
+                case "game_over":
+                    console.log("GAME OVER")
+                    handleGameEnd()
                     break;
                 default:
                     break;

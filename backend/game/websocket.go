@@ -36,7 +36,6 @@ func NewGame() Game {
 func (g *Game) HandleWS(w http.ResponseWriter, r *http.Request) {
 	// handle websocket connection
 	conn, err := upgrader.Upgrade(w, r, nil)
-	fmt.Println("CONNECTION")
 
 	if err != nil {
 		http.Error(w, "could not upgrade connection", http.StatusBadRequest)
@@ -56,7 +55,6 @@ func (g *Game) HandleWS(w http.ResponseWriter, r *http.Request) {
 }
 
 func (g *Game) HandleGameRequest(payload Payload, conn *websocket.Conn) {
-	fmt.Println("\n\npayload(l58): ", payload)
 	// handle user connection
 	switch payload.Type {
 	case "join":
@@ -79,7 +77,6 @@ func (g *Game) HandleGameRequest(payload Payload, conn *websocket.Conn) {
 
 	case "action":
 		// move player
-		fmt.Println("ACTION: ", payload)
 		BroadcastChannel <- Payload{
 			Type:    "action",
 			Content: payload.Content,
@@ -94,9 +91,14 @@ func (g *Game) HandleGameRequest(payload Payload, conn *websocket.Conn) {
 		}
 
 	case "looseLife":
-		fmt.Println("LOOSE_LIFE: ", payload)
 		BroadcastChannel <- Payload{
 			Type:   "looseLife",
+			Sender: payload.Sender,
+	}
+
+	case "playerLost":
+		BroadcastChannel <- Payload{
+			Type:   "playerLost",
 			Sender: payload.Sender,
 		}
 
@@ -114,6 +116,12 @@ func (g *Game) HandleGameRequest(payload Payload, conn *websocket.Conn) {
 			Sender: payload.Sender,
 		}
 
+	case "gameEnd":
+		BroadcastChannel <- Payload{
+			Type:    "game_over",
+			Content: "timer is 0",
+			Sender:  "server",
+		}
 	default:
 	}
 }
@@ -153,7 +161,6 @@ func (g *Game) HandleJoinRoom(payload Payload, conn *websocket.Conn) error {
 	// add player to room
 	g.Rooms.Players = append(g.Rooms.Players, newPlayer)
 	if len(g.Rooms.Players) == 2 {
-		fmt.Println("START TIMER")
 		go g.FirstTimer()
 	}
 	return nil
@@ -189,7 +196,6 @@ func (g *Game) FirstTimer() {
 // 10s timer
 func (g *Game) SecondTimer() {
 	SECOND_TIMER_START = true
-	fmt.Println("FROM SECOND TIMER")
 	duration := 10
 	for range time.Tick(1 * time.Second) {
 		if duration < 0 {
@@ -208,12 +214,14 @@ func (g *Game) SecondTimer() {
 
 func (g *Game) GameTimer() {
 	GAME_TIMER_START = true
-	fmt.Println("FROM GAME TIMER")
 
 	// 3 minutes = 180 seconds
 	duration := 180
 
 	for range time.Tick(1 * time.Second) {
+		if (!GAME_TIMER_START) {
+			break
+		}
 		if duration < 0 {
 			BroadcastChannel <- Payload{
 				Type:    "game_over",
@@ -258,4 +266,12 @@ func (g *Game) UpdateMap() {
 			nb++
 		}
 	}
+}
+
+func (g *Game) Reset() {
+	FIRST_TIMER_START = false
+	SECOND_TIMER_START = false
+	GAME_TIMER_START = false
+	g.Rooms.Players = []Player{}
+	g.Rooms.Grid = utils.Matrix()
 }

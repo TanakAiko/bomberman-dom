@@ -28,6 +28,9 @@ func main() {
 					fmt.Println("could not write message to connection", err)
 				}
 			}
+			if (payload.Type == "game_over") {
+				NewGame.Reset()
+			}
 		}
 	}()
 

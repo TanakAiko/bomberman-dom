@@ -1,4 +1,5 @@
 import store from "../app/store/store-app.js";
+import router from "../../index.js";
 
 // POWER UPS
 const bombs = `<span class="bombs">💣</span>`
@@ -59,33 +60,7 @@ export function updateMap(coordonates, player) {
         }
     })
 }
-// export function cleanExplosion(targets, coordonates) {
-//     let index = 0
-//     for (let target of targets) {
-//         removeBomb(target, "span")
-//         target.classList.remove("m");
-//         target.classList.add("c");
-//         ShortLivedPowerUps(target, coordonates[index])
-//         index++
-//     }
-// }
 
-
-// function ShortLivedPowerUps(target, coord) {
-//     switch (target.classList[0]) {
-//         case "x":
-//             target.innerHTML += flames
-//         case "y":
-//             target.innerHTML += speed
-//         case "z":
-//             target.innerHTML += bombs
-//     }
-//     target.classList.remove("x", "y", "z")
-//     store.state.map[coord.x][coord.y] = "c"
-//     setTimeout(() => {
-//         removeBomb(target, "span")
-//     }, 2000)
-// }
 
 export function cleanExplosion(targets, coordonates) {
     let index = 0;
@@ -139,5 +114,49 @@ function ShortLivedPowerUps(target, coord) {
 export function playSound(titleSound) {
     const audio = new Audio('./assets/' + titleSound);
     audio.play();
+}
 
+export function checkIfLost(playerName) {
+    store.state.players.forEach((player) => {
+        if (player.name === playerName) {
+            if (player.life === 0) {
+                store.state.socket.Send({
+                    type: "playerLost",
+                    nickname: playerName,
+                });
+            }
+        }
+    });
+}
+
+export function DeletePlayer(playerName) {
+    store.state.players.forEach((player) => {
+        if (player.name === playerName) {
+            const playerRef = document.getElementById(player.id);
+            playerRef.remove();
+            const playerIndex = store.state.players.indexOf(player);
+            store.state.players.splice(playerIndex, 1);
+        }
+    });
+
+    if (store.state.players.length === 0) {
+        store.state.socket.Send({
+            type: "gameEnd",
+        });
+    }
+}
+
+export function handleGameEnd() {
+    if (store.state.players.length === 1) {
+        if (store.state.players[0].name === store.state.Nickname) {
+            store.state.endMessage = "You won!";
+        } else {
+            store.state.endMessage = "You lost!";
+        }
+        router.navigateTo("/end");
+    }
+    if (store.state.players.length === 0) {
+        store.state.endMessage = "No win!";
+        router.navigateTo("/end");
+    }
 }

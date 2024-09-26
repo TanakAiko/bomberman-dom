@@ -5,6 +5,7 @@ import player from "./src/app/components/name-enter.js"
 import waitingRoom from "./src/app/components/waiting-room.js"
 import preGame from "./src/app/components/pre-game.js"
 import game from "./src/app/components/game.js"
+import endGame from "./src/app/components/endGame.js"
 import USER_ACTIONS from "./src/app/user-action.js"
 
 
@@ -26,6 +27,9 @@ const preGameComponent = preGameContext.PreGame()
 const GameContext = game()
 const GameComponent = GameContext.Game()
 
+const endGameContext = endGame()
+const endGameComponent = endGameContext.EndGame()
+
 // Define routes
 const routes = {
     "/": {
@@ -46,6 +50,11 @@ const routes = {
     "/game": {
         context: { ...GameContext, ...USER_ACTIONS }, 
         component: GameComponent
+    },
+
+    "/end": {
+        context: { ...endGameContext, ...USER_ACTIONS },
+        component: endGameComponent
     }
 }
 

@@ -38,6 +38,10 @@ const USER_ACTIONS = {
     setPlayers: (Players) => {
         return Players.map((player) => playerDetail(player).PlayerDetail()).join("")
     },
+    goToHome: () => {
+        router.navigateTo("/")
+        window.location.reload()
+    }
 }
 
 export default USER_ACTIONS;
