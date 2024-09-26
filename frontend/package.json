@@ -1,0 +1,22 @@
+{
+    "name": "bomberman",
+    "version": "1.0.0",
+    "description": "Frontend application for the Bomberman multiplayer game using Express and communicating with a Go backend",
+    "type": "module",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "nodemon server.js"
+    },
+    "author": "Our team",
+    "license": "MIT",
+    "keywords": [],
+    "dependencies": {
+        "axios": "^1.7.7",
+        "express": "^4.21.0",
+        "lodash": "^4.17.21"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.5"
+    }
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déplacement sur quatre côtés</title>
+    <style>
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            width: 500px;
+            height: 300px;
+            border: 3px solid black;
+            position: relative;
+        }
+
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute; /* Positionner l'élément pour permettre un déplacement dans la zone */
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div id="div1"></div>
+    </div>
+    <script>
+        const div1 = document.getElementById('div1');
+        let x = 0; // Position initiale en X
+        let y = 0; // Position initiale en Y
+
+        document.addEventListener('keydown', (e) => {
+            // Déplacement vers la droite
+            if (e.key === 'ArrowRight') {
+                x += 100;
+            }
+            // Déplacement vers la gauche
+            else if (e.key === 'ArrowLeft') {
+                x -= 100;
+            }
+            // Déplacement vers le haut
+            else if (e.key === 'ArrowUp') {
+                y -= 100;
+            }
+            // Déplacement vers le bas
+            else if (e.key === 'ArrowDown') {
+                y += 100;
+            }
+
+            // Appliquer la translation combinée sur X et Y
+            div1.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    </script>
+</body>
+</html>

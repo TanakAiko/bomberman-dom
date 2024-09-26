@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+    --bloc-size: 40px;
+    /* --animate-transition: 40px */
+  }
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background: linear-gradient(135deg, #4a90e2, #7e57c2);
+}
+
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.chat-container {
+    height: 200px;
+    overflow-y: auto;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+.character {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.character:hover {
+    transform: scale(1.1);
+}
+
+.character.selected {
+    border: 4px solid #fbbf24;
+    box-shadow: 0 0 20px #fbbf24;
+}
+
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(13, 1fr);
+    width: calc(var(--bloc-size)*15);
+    height: calc(var(--bloc-size)*13);
+    margin: auto;
+    width: 100%;
+    height: 100%; 
+}
+
+.game-cell {
+    background-color: #8B4513;
+    border: 1px solid #A0522D;
+}
+
+.game-cell:nth-child(odd) {
+    background-color: #A0522D;
+}
+
+.power-up {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: white;
+    font-weight: bold;
+}
+
+.power-up-bombs {
+    background-color: #e74c3c;
+}
+
+.power-up-flames {
+    background-color: #f39c12;
+}
+
+.power-up-speed {
+    background-color: #2ecc71;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.player-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.player-details {
+    flex-grow: 1;
+    font-size: 0.7em;
+}
+
+.player-name {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.player-stats {
+    display: flex;
+    justify-content: space-between;
+}
+
+.player-character {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    margin-left: 5px;
+    font-size: 0.7em;
+}
+
+.b {
+    background: url('./assets/bloc.png');
+    background-size: cover;
+  }
+  
+  .m,
+  .x,
+  .y,
+  .z {
+    background: url('./assets/mur.png');
+    background-size: cover;
+  }
+  
+  .c {
+    background: #8B4513;
+    background-size: cover;
+  }
+
+  .avatarGame {
+    font-size: var(--bloc-size);
+    
+    position: relative;
+    
+  }
+
+  .bomb {
+    width: 60%;
+    height: 60%;
+    z-index: 1; /* Assure que l'image est en dessous */
+  }
+
+  .avatarGame p {
+    position: absolute;
+    font-size: 40px; /* Ajuste selon les besoins */
+    text-align: center;
+  }
+
+
+  .explosion {
+    font-size: 40px; /* Ajuste la taille selon tes besoins */
+  }
