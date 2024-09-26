@@ -46,7 +46,6 @@ export function removeBomb(target, child = "img") {
 }
 
 export function updateMap(coordonates, player) {
-    console.log("==updateMap======> ", player);
     const map = store.state.map
     coordonates.forEach(coords => {
         if (map[coords.x][coords.y] === "m") {
@@ -108,7 +107,7 @@ export function cleanExplosion(targets, coordonates) {
         index++;
 
         // Attendre 2 secondes avant de montrer le suivant
-        setTimeout(showNextPowerUp, 1000);
+        setTimeout(showNextPowerUp, 3000);
     }
 
     // Lancer l'apparition des power-ups

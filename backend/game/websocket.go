@@ -177,7 +177,6 @@ func (g *Game) FirstTimer() {
 			go g.SecondTimer()
 			return
 		}
-		fmt.Println("duration:", duration)
 		BroadcastChannel <- Payload{
 			Type:    "timer 1",
 			Content: fmt.Sprintf("%d", duration),
@@ -198,7 +197,6 @@ func (g *Game) SecondTimer() {
 			go g.GameTimer()
 			return
 		}
-		fmt.Println("duration:", duration)
 		BroadcastChannel <- Payload{
 			Type:    "timer 2",
 			Content: fmt.Sprintf("%d", duration),
@@ -230,8 +228,6 @@ func (g *Game) GameTimer() {
 
 		// Format time as MM:SS
 		timerString := fmt.Sprintf("%d:%02d", minutes, seconds)
-
-		fmt.Println("Timer:", timerString)
 
 		// Broadcast the remaining time
 		BroadcastChannel <- Payload{

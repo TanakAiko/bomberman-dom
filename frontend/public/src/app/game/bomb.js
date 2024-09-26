@@ -68,10 +68,7 @@ class Bomb {
     exploseBomb(bomb, player) {
         const coordonates_impact = getImpactDiv(player, player.portee);
         const toClean = [];
-        const toClean_coords = [];
-
-        console.log("========> ", player);
-        
+        const toClean_coords = [];        
 
         setTimeout(() => {
             removeBomb(bomb);
@@ -81,13 +78,12 @@ class Bomb {
     }
 
     handleExplosion(coordonates_impact, toClean, toClean_coords, thePlayer) {
-        /* console.log("coordonates_impact: ", coordonates_impact);
-        console.log("store.state.players: ", store.state.players); */
-
+        
         coordonates_impact.forEach(coords => {
             if (this.isValidCoord(coords)) {
-
                 const target = document.getElementById(`${coords.x}${coords.y}`);
+                console.log("target: ", target);
+                
                 if (!target.classList.contains("b")) {
                     toClean.push(target);
                     toClean_coords.push(coords);
@@ -109,7 +105,6 @@ class Bomb {
                                 })
                             }
                         }
-
                         
                     }
                 }
@@ -119,7 +114,7 @@ class Bomb {
         playSound("sound_bomb.mp3");
         updateMap(coordonates_impact, thePlayer);
 
-        setTimeout(() => cleanExplosion(toClean, toClean_coords), 2000);
+        setTimeout(() => cleanExplosion(toClean, toClean_coords), 1000);
     }
 
     isValidCoord({ x, y }) {
