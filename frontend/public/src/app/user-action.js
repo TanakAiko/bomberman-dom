@@ -1,6 +1,5 @@
 import store from "./store/store-app.js";
 import GameWebSocket from "./game/websocket.js";
-import router from "../../index.js";
 import playerItem from "../app/components/player-item.js";
 import message from "../app/components/chatBox.js";
 import playerDetail from "./components/playerBox.js";
@@ -18,6 +17,7 @@ const USER_ACTIONS = {
     handleChangeMsg: (e) => {
         if (e.target.value) { 
             store.state.Message = e.target.value 
+            USER_ACTIONS.SubmitNewMsg();
             e.target.value = ""
         }
     },

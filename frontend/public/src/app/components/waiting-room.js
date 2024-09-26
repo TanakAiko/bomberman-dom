@@ -7,7 +7,18 @@ const waitingRoom = () => {
                 {users.map(player => createUserWaitingRoom(player)).join("")}
             </div>
             <div id="lobby-timer" className="text-3xl text-white text-center mb-4">{timer}</div>
-            <button id="start-game-btn" className="btn bg-green-500 text-white px-8 py-4 rounded-lg text-xl w-full mb-4" disabled>Démarrer la partie</button>
+        </div>
+
+        <div>
+            <div className="flex gap-2">
+                <div className="flex-grow">
+                    <input onChange=handleChangeMsg type="text" id="chat-input" placeholder="Message..." className="w-full p-2 rounded-lg" />
+                </div>
+                <button onClick=SubmitNewMsg id="send-btn" className="btn bg-blue-500 text-white px-4 py-2 rounded-lg whitespace-nowrap">Envoyer</button>
+            </div>
+            <div className="chat-container bg-gray-700 text-white p-4 rounded-lg flex-grow">
+                { setMessages(messages) }
+            </div>
         </div>
     </mini>
     `
