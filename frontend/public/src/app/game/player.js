@@ -18,6 +18,10 @@ class Player {
         this.score = 0;
     }
 
+    decrementLife() {
+        this.life--
+    }
+
     move(direction) {
         const map = store.state.map
         let newX = this.initX

@@ -57,6 +57,7 @@ class GameWebSocket {
 
                 // when we receive an action
                 case "action":
+                    console.log("ACTIONNNNN: ", payload);
                     (payload.content).includes("Arrow") && playerMove(payload);
                     payload.content === " " && playerBoom(payload);
                     break;
@@ -65,6 +66,15 @@ class GameWebSocket {
                 case "receiveMessage":
                     store.dispatch({ type: "ADD_MSG", payload: payload })
                     break;
+
+                case "looseLife":
+                    console.log("payload(LOOSE_LIFE): ", payload);
+                    
+                    store.dispatch({type: "LOOSE_LIFE", payload: payload})
+
+                    console.log("last players version : ", store.state.players);
+                    
+                    break
 
                 // when one player leaves the game
                 case "leave":

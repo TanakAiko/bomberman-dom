@@ -19,7 +19,7 @@
 //         const coordonates_impact = getImpactDiv(player, player.portee)
 //         const toClean = []
 //         const toClean_coords = []
-        
+
 //         setTimeout(() => {
 //             removeBomb(bomb)
 //             coordonates_impact.forEach(coords => {
@@ -46,9 +46,10 @@
 // const bomb = new Bomb();
 // export default bomb;
 import { getImpactDiv, removeBomb, cleanExplosion, updateMap, playSound } from "../../utils/utils.js";
+import store from "../store/store-app.js";
 
 class Bomb {
-    constructor() {}
+    constructor() { }
 
     poseBomb(target, player) {
         if (player.nombreActualBomb >= player.minage) return;
@@ -77,13 +78,30 @@ class Bomb {
     }
 
     handleExplosion(coordonates_impact, toClean, toClean_coords) {
+        console.log("coordonates_impact: ", coordonates_impact);
+        console.log("store.state.players: ", store.state.players);
+
         coordonates_impact.forEach(coords => {
             if (this.isValidCoord(coords)) {
+
                 const target = document.getElementById(`${coords.x}${coords.y}`);
                 if (!target.classList.contains("b")) {
                     toClean.push(target);
                     toClean_coords.push(coords);
                     target.innerHTML += `<span class="explosion">💥</span>`;
+                }
+
+                for (let i = 0; i  < store.state.players.length; i++) {
+                    if (store.state.players[i].posX === coords.x && store.state.players[i].posY === coords.y) {
+                        //store.dispatch({type: "LOOSE_LIFE", payload: store.state.players[i]})
+                        console.log("SendLOOSeLife to : ", store.state.players[i]);
+                        if (store.state.players[i].name === store.state.Nickname) {
+                            store.state.socket.Send({
+                                type: "looseLife",
+                                nickname: store.state.players[i].name,
+                            })
+                        }
+                    }
                 }
             }
         });

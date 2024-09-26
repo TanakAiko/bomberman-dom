@@ -12,6 +12,16 @@ const reducer = (state, action) => {
             return { ...state, messages: [...state.messages || [], action.payload] }
         case "SET_GAME_TIMER":
             return { ...state, gameTimer: action.payload.timer }
+        case "LOOSE_LIFE":
+            return {
+                ...state,
+                players: state.players.map(player => {
+                    if (player.name === action.payload.nickname) {
+                        player.decrementLife();
+                    }
+                    return player;
+                })
+            }
         default:
             return state;
     }

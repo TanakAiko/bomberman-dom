@@ -93,6 +93,13 @@ func (g *Game) HandleGameRequest(payload Payload, conn *websocket.Conn) {
 			Sender:  payload.Sender,
 		}
 
+	case "looseLife":
+		fmt.Println("LOOSE_LIFE: ", payload)
+		BroadcastChannel <- Payload{
+			Type:   "looseLife",
+			Sender: payload.Sender,
+		}
+
 	default:
 	}
 }
@@ -149,7 +156,7 @@ func (g *Game) ConcatAllPlayers() string {
 
 // 20s timer
 func (g *Game) FirstTimer() {
-	duration := 20
+	duration := 2
 	FIRST_TIMER_START = true
 	for range time.Tick(1 * time.Second) {
 		if duration < 0 || len(g.Rooms.Players) == 4 {
@@ -170,7 +177,7 @@ func (g *Game) FirstTimer() {
 func (g *Game) SecondTimer() {
 	SECOND_TIMER_START = true
 	fmt.Println("FROM SECOND TIMER")
-	duration := 10
+	duration := 1
 	for range time.Tick(1 * time.Second) {
 		if duration < 0 {
 			g.SendMap()
@@ -186,7 +193,6 @@ func (g *Game) SecondTimer() {
 		duration--
 	}
 }
-
 
 func (g *Game) GameTimer() {
 	GAME_TIMER_START = true
@@ -223,7 +229,6 @@ func (g *Game) GameTimer() {
 		duration--
 	}
 }
-
 
 func (g *Game) SendMap() {
 	g.UpdateMap()

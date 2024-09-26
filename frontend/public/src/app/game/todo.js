@@ -11,7 +11,7 @@ export function UserJoined(payload) {
             avatar: `https://api.dicebear.com/6.x/pixel-art/svg?seed=${encodeURIComponent(name)}`,
         }
     });
-    store.dispatch({type: "SET_USERS", payload: {users: allPlayers}});
+    store.dispatch({ type: "SET_USERS", payload: { users: allPlayers } });
 }
 
 const PLAYERS_POSITIONS = [
@@ -46,10 +46,10 @@ export function constructMap(payload) {
         for (let j = 0; j < grid[i].length; j++) {
             let div
             if (grid[i][j] === "p") {
-                div =`<div id="${i}${j}" className="c avatarGame">
+                div = `<div id="${i}${j}" className="c avatarGame">
                             <p 
                             id=P${index}
-                            >${representation[index-1]}</p>
+                            >${representation[index - 1]}</p>
                         </div>`
                 index++
             } else {
@@ -65,14 +65,11 @@ export function constructMap(payload) {
 }
 
 export function playerMove(payload) {
-    const nickname = payload.nickname;
-    let player;
     store.state.players.forEach((p) => {
-        if (p.name === nickname) {
-            player = p;
+        if (p.name === payload.nickname) {
+            p.move(payload.content);
         }
     });
-    player.move(payload.content);
 }
 
 export function playerBoom(payload) {
@@ -83,7 +80,7 @@ export function playerBoom(payload) {
             player = p;
         }
     });
-    
+
     console.log("POSX: ", player.posX, "POSY: ", player.posY);
     const target = document.getElementById(`${player.posX}${player.posY}`);
     bomb.poseBomb(target, player);
