@@ -38,9 +38,9 @@ const game = () => {
                     <div className="bg-gray-700 text-white p-4 rounded-lg">
                         <h3 className="text-xl mb-2">Power-ups</h3>
                         <div className="flex justify-around">
-                            <div className="power-up power-up-bombs" title="Bombs">B</div>
-                            <div className="power-up power-up-flames" title="Flames">F</div>
-                            <div className="power-up power-up-speed" title="Speed">S</div>
+                            <div className="power-up power-up-bombs" title="Bombs">💣</div>
+                            <div className="power-up power-up-flames" title="Flames">🔥</div>
+                            <div className="power-up power-up-speed" title="Speed">🏃🏿</div>
                         </div>
                     </div>
                 </div>

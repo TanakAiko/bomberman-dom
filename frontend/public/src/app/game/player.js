@@ -11,10 +11,10 @@ class Player {
         this.posX = x
         this.posY = y
         this.life = 3;
-        this.nombreActualBomb = 0; 
-        this.portee = 1; 
-        this.minage = 1; 
-        this.speed = 1; 
+        this.nombreActualBomb = 0;
+        this.portee = 1;
+        this.minage = 1;
+        this.speed = 1;
         this.score = 0;
     }
 
@@ -50,6 +50,9 @@ class Player {
             this.posX = newX_coord
             this.posY = newY_coord
             this.updatePosition()
+            if (this.hasPowerUp()) {
+                this.takePowerUps()
+            }
         }
 
     }
@@ -66,6 +69,42 @@ class Player {
         const playerRef = document.getElementById(this.id)
         if (playerRef) {
             playerRef.style.transform = `translate(${this.initY}px, ${this.initX}px)`
+        }
+    }
+
+    takePowerUps() {
+        const target = document.getElementById(`${this.posX}${this.posY}`)
+        const powerUp = target.querySelector("span")
+        if (powerUp) {
+            if (powerUp.classList.contains("bombs")) {
+                this.minage = 2
+                console.log("MINAGE: ", this.minage)
+                console.log("NOMBRE BOMBES: ", this.nombreActualBomb)
+                setTimeout(() => {
+                    this.minage = 1
+                }, 5000)
+            } else if (powerUp.classList.contains("flames")) {
+                this.portee = 2
+                setTimeout(() => {
+                    this.portee = 1
+                }, 5000)
+            } else if (powerUp.classList.contains("speed")) {
+                this.speed = 4
+                setTimeout(() => {
+                    this.speed = 1
+                }, 5000)
+            }
+            powerUp.remove()
+        }
+    }
+
+    hasPowerUp() {
+        const target = document.getElementById(`${this.posX}${this.posY}`)
+        const powerUp = target.querySelector("span")
+        if (powerUp) {
+            return powerUp.classList.contains("bombs") ||
+                powerUp.classList.contains("flames") ||
+                powerUp.classList.contains("speed")
         }
     }
 }

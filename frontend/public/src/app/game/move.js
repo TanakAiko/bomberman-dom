@@ -9,11 +9,16 @@ const handleMove = (e) => {
                     player = p
                 }
             })
-            store.state.socket.Send({
-                type: "action",
-                nickname: store.state.Nickname,
-                content: e.key,
-            })
+            let timerDebounce = setTimeout(() => {
+                store.state.socket.Send({
+                    type: "action",
+                    nickname: store.state.Nickname,
+                    content: e.key,
+                })
+                clearTimeout(timerDebounce);
+                store.state.timerDebounce = 0;
+            }, 200 / player.speed)
+            store.state.timerDebounce = timerDebounce;
         }
     }
 

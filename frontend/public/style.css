@@ -164,7 +164,6 @@ body {
 
   .avatarGame {
     font-size: var(--bloc-size);
-    
     position: relative;
     
   }
@@ -172,16 +171,40 @@ body {
   .bomb {
     width: 60%;
     height: 60%;
-    z-index: 1; /* Assure que l'image est en dessous */
+    z-index: 1;
   }
 
-  .avatarGame p {
+  .avatarGame span {
     position: absolute;
     font-size: 40px; /* Ajuste selon les besoins */
     text-align: center;
   }
 
 
-  .explosion {
-    font-size: 40px; /* Ajuste la taille selon tes besoins */
+  .explosion{
+    font-size: var(--bloc-size);
+    width: 60%;
+    height: 60%;
+    z-index: 1;
   }
+
+  .bombs {
+    font-size: var(--bloc-size);
+    width: 60%;
+    height: 60%;
+    z-index: 1;
+  }
+  
+    .flames {
+        font-size: var(--bloc-size);
+        width: 60%;
+        height: 60%;
+        z-index: 1;
+    }
+
+    .speed {
+        font-size: var(--bloc-size);
+        width: 60%;
+        height: 60%;
+        z-index: 1;
+    }

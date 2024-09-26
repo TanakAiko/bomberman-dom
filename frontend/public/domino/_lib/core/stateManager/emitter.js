@@ -16,8 +16,6 @@ export default class EventEmitter {
             return []
         }
 
-        /* console.log("publishing event", event)
-        console.log("publishing event", event) */
         return this.events[event].map(callback => callback(data))
     }
 }

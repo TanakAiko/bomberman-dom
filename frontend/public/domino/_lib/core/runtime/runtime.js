@@ -15,7 +15,7 @@ class Domino {
     /**
      * Exécute un composant avec un contexte donné et le monte dans le DOM.
      */
-    run(context, component, root, todo = () => { console.log("No additional tasks") }) {
+    run(context, component, root, todo = () => {}) {
         // Évaluation du code du composant avec le contexte
         const evaluatedCode = EvalJS(component, context);
         this.compiler.setCode(evaluatedCode);

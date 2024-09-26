@@ -149,7 +149,7 @@ func (g *Game) ConcatAllPlayers() string {
 
 // 20s timer
 func (g *Game) FirstTimer() {
-	duration := 2
+	duration := 20
 	FIRST_TIMER_START = true
 	for range time.Tick(1 * time.Second) {
 		if duration < 0 || len(g.Rooms.Players) == 4 {
@@ -170,7 +170,7 @@ func (g *Game) FirstTimer() {
 func (g *Game) SecondTimer() {
 	SECOND_TIMER_START = true
 	fmt.Println("FROM SECOND TIMER")
-	duration := 1
+	duration := 10
 	for range time.Tick(1 * time.Second) {
 		if duration < 0 {
 			g.SendMap()

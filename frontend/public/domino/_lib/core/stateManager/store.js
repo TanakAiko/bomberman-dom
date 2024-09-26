@@ -18,7 +18,6 @@ export default class Store {
     }
 
     dispatch(action) {
-        console.log('dispatching', action);
         let self = this;
 
         self.middlewares.forEach(middleware => {
@@ -32,7 +31,6 @@ export default class Store {
     commit(action) {
         let self = this;
         let newState = self.reducer(self.state, action);
-        console.log("newState: ", newState);
         self.state = Object.assign(self.state, newState);
         return true
     }

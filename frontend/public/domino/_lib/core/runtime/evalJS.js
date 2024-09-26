@@ -35,9 +35,6 @@ function evalComponent(code, context) {
     while ((matches = componentPattern.exec(code)) !== null) {
         components.push(matches[1])
     }
-    /* console.log(components)
-    console.log(context )
-    console.log(code) */
 
     if (components.length > 0) {
         components.forEach(component => {
