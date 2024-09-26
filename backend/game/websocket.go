@@ -100,6 +100,20 @@ func (g *Game) HandleGameRequest(payload Payload, conn *websocket.Conn) {
 			Sender: payload.Sender,
 		}
 
+	case "upScoreWall":
+		fmt.Println("UP_SCORE_WALL: ", payload)
+		BroadcastChannel <- Payload{
+			Type:   "upScoreWall",
+			Sender: payload.Sender,
+		}
+
+	case "upScoreEnnemy":
+		fmt.Println("UP_SCORE_ENNEMY: ", payload)
+		BroadcastChannel <- Payload{
+			Type:   "upScoreEnnemy",
+			Sender: payload.Sender,
+		}
+
 	default:
 	}
 }

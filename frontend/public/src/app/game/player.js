@@ -22,6 +22,14 @@ class Player {
         this.life--
     }
 
+    upScoreWall() {
+        this.score += 10
+    }
+
+    upScoreEnnemy() {
+        this.score += 100
+    }
+
     move(direction) {
         const map = store.state.map
         let newX = this.initX

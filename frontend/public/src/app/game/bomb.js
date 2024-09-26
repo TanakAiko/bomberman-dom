@@ -70,16 +70,19 @@ class Bomb {
         const toClean = [];
         const toClean_coords = [];
 
+        console.log("========> ", player);
+        
+
         setTimeout(() => {
             removeBomb(bomb);
-            this.handleExplosion(coordonates_impact, toClean, toClean_coords);
+            this.handleExplosion(coordonates_impact, toClean, toClean_coords, player);
             player.nombreActualBomb--;
         }, 3000);
     }
 
-    handleExplosion(coordonates_impact, toClean, toClean_coords) {
-        console.log("coordonates_impact: ", coordonates_impact);
-        console.log("store.state.players: ", store.state.players);
+    handleExplosion(coordonates_impact, toClean, toClean_coords, thePlayer) {
+        /* console.log("coordonates_impact: ", coordonates_impact);
+        console.log("store.state.players: ", store.state.players); */
 
         coordonates_impact.forEach(coords => {
             if (this.isValidCoord(coords)) {
@@ -93,20 +96,28 @@ class Bomb {
 
                 for (let i = 0; i  < store.state.players.length; i++) {
                     if (store.state.players[i].posX === coords.x && store.state.players[i].posY === coords.y) {
-                        //store.dispatch({type: "LOOSE_LIFE", payload: store.state.players[i]})
-                        console.log("SendLOOSeLife to : ", store.state.players[i]);
                         if (store.state.players[i].name === store.state.Nickname) {
                             store.state.socket.Send({
                                 type: "looseLife",
                                 nickname: store.state.players[i].name,
                             })
+
+                            if (thePlayer.name != store.state.Nickname) {
+                                store.state.socket.Send({
+                                    type: "upScoreEnnemy",
+                                    nickname: thePlayer.name,
+                                })
+                            }
                         }
+
+                        
                     }
                 }
+
             }
         });
         playSound("sound_bomb.mp3");
-        updateMap(coordonates_impact);
+        updateMap(coordonates_impact, thePlayer);
 
         setTimeout(() => cleanExplosion(toClean, toClean_coords), 2000);
     }

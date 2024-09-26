@@ -17,17 +17,17 @@ class GameWebSocket {
     handleReceive() {
         this.socket.onmessage = (event) => {
             const payload = JSON.parse(event.data);
-            switch(payload.type) {
+            switch (payload.type) {
 
                 // when timer 1 is received
                 case "timer 1":
-                    store.dispatch({type: "SET_TIMER", payload: {timer: payload.content }});
+                    store.dispatch({ type: "SET_TIMER", payload: { timer: payload.content } });
                     break;
 
                 // when timer 2 is received
                 case "timer 2":
                     router.navigateTo("/pre-game");
-                    store.dispatch({type: "SET_TIMER", payload: {timer: payload.content }});
+                    store.dispatch({ type: "SET_TIMER", payload: { timer: payload.content } });
                     break;
 
                 // when timer 3 is received
@@ -68,12 +68,15 @@ class GameWebSocket {
                     break;
 
                 case "looseLife":
-                    console.log("payload(LOOSE_LIFE): ", payload);
-                    
-                    store.dispatch({type: "LOOSE_LIFE", payload: payload})
+                    store.dispatch({ type: "LOOSE_LIFE", payload: payload })
+                    break
 
-                    console.log("last players version : ", store.state.players);
-                    
+                case "upScoreWall":
+                    store.dispatch({ type: "UP_SCORE_WALL", payload: payload })
+                    break
+
+                case "upScoreEnnemy":
+                    store.dispatch({ type: "UP_SCORE_ENNEMY", payload: payload })
                     break
 
                 // when one player leaves the game

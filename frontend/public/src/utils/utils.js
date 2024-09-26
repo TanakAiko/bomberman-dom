@@ -45,11 +45,18 @@ export function removeBomb(target, child = "img") {
     });
 }
 
-export function updateMap(coordonates) {
+export function updateMap(coordonates, player) {
+    console.log("==updateMap======> ", player);
     const map = store.state.map
     coordonates.forEach(coords => {
         if (map[coords.x][coords.y] === "m") {
             map[coords.x][coords.y] = "c"
+            if (player.name === store.state.Nickname) {
+                store.state.socket.Send({
+                    type: "upScoreWall",
+                    nickname: player.name,
+                })
+            }
         }
     })
 }

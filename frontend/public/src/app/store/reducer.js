@@ -14,14 +14,28 @@ const reducer = (state, action) => {
             return { ...state, gameTimer: action.payload.timer }
         case "LOOSE_LIFE":
             return {
-                ...state,
-                players: state.players.map(player => {
-                    if (player.name === action.payload.nickname) {
-                        player.decrementLife();
-                    }
+                ...state, players: state.players.map(player => {
+                    if (player.name === action.payload.nickname) { player.decrementLife() }
                     return player;
                 })
             }
+
+        case "UP_SCORE_WALL":
+            return {
+                ...state, players: state.players.map(player => {
+                    if (player.name === action.payload.nickname) { player.upScoreWall() }
+                    return player;
+                })
+            }
+
+        case "UP_SCORE_ENNEMY":
+            return {
+                ...state, players: state.players.map(player => {
+                    if (player.name === action.payload.nickname) { player.upScoreEnnemy() }
+                    return player;
+                })
+            }
+
         default:
             return state;
     }
