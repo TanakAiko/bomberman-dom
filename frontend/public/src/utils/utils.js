@@ -155,7 +155,7 @@ export function handleGameEnd() {
         }
         router.navigateTo("/end");
     }
-    if (store.state.players.length === 0) {
+    if (store.state.players.length === 0 || store.state.players.length > 1) {
         store.state.endMessage = "No win!";
         router.navigateTo("/end");
     }
